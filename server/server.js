@@ -11,7 +11,8 @@ app.use(bodyParser.json()); // needed for angular requests
 app.use(express.static('build'));
 
 /** ---------- ROUTES ---------- **/
-app.use('/', movieRouter);
+// base route to use movieRouter
+app.use('/API', movieRouter);
 
 /** ---------- START SERVER ---------- **/
 app.listen(port, function () {
