@@ -9,10 +9,31 @@ import { Provider } from 'react-redux';
 import logger from 'redux-logger';
 // Import saga middleware
 import createSagaMiddleware from 'redux-saga';
+// takeEvery Allows an saga to run only when a matching patter is dispatched, and runs that saga function
+// put allows the saga to dispatch an action to the Store.
+import { takeEvery, put } from 'redux-saga/effects';
+// Axios allows client to send asynchronous CRUD operation request to server
+import axios from 'axios';
+
 
 // Create the rootSaga generator function
 function* rootSaga() {
+    yield takeEvery('FETCH_MOVIES', fetchMovies);
+}
 
+// Declare fetchMovies generator function
+// Send 'GET' request to server at url: '/'
+// Put dispatches action to store to set redux state
+function* fetchMovies() {
+    try {
+         // movieResponse is an object with an array of objects with properties of id, title, poster, description
+        const moviesResponse = yield axios.get('/');
+        // moviesResponse.data is only the array of objects with properties of id, title, poster, description
+        yield put({type: 'SET_MOVIES', payload: moviesResponse.data })
+    } catch(error) {
+        // catch error if issues with axios.get or put
+        console.log('error fetching movies', error)
+    }
 }
 
 // Create sagaMiddleware
