@@ -20,7 +20,7 @@ class MovieList extends Component {
     render() {
         return (
             <div className="movie-container">
-
+                {/* map through image reduxState and display title, poster, and description */}
                 {this.props.movies.map(movieItem => {
                     return (
                         <>
@@ -35,9 +35,10 @@ class MovieList extends Component {
                             </div>
                         </>);
                 })}
-                <pre>
+                {/* <pre>
                     {JSON.stringify(this.props.movies, null, 4)}
-                </pre>
+                </pre> */}
+                
             </div>
         );
     }
