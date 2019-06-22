@@ -30,7 +30,7 @@ class MovieList extends Component {
                             <div className="movie-poster">
                                 <img src={movieItem.poster} alt={`Image of the movie ${movieItem.title}`} />
                             </div>
-                            <div className="movie-poster">
+                            <div className="movie-description">
                                 {movieItem.description}
                             </div>
                         </>);
@@ -38,7 +38,7 @@ class MovieList extends Component {
                 {/* <pre>
                     {JSON.stringify(this.props.movies, null, 4)}
                 </pre> */}
-                
+
             </div>
         );
     }
