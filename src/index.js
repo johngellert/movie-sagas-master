@@ -26,11 +26,11 @@ function* rootSaga() {
 // Put dispatches action to store to set redux state
 function* fetchMovies() {
     try {
-         // movieResponse is an object with an array of objects with properties of id, title, poster, description
+        // movieResponse is an object with an array of objects with properties of id, title, poster, description
         const moviesResponse = yield axios.get('/API/movies');
         // moviesResponse.data is only the array of objects with properties of id, title, poster, description
-        yield put({type: 'SET_MOVIES', payload: moviesResponse.data });
-    } catch(error) {
+        yield put({ type: 'SET_MOVIES', payload: moviesResponse.data });
+    } catch (error) {
         // catch error if issues with axios.get or put
         console.log('error fetching movies', error)
     }
@@ -59,11 +59,22 @@ const genres = (state = [], action) => {
     }
 }
 
+//Used to store current movie id
+const movieId = (state = 0, action) => {
+    switch (action.type) {
+        case 'SET_CURRENT_MOVIE_ID':
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
 // Create one store that all components can use
 const storeInstance = createStore(
     combineReducers({
         movies,
         genres,
+        movieId,
     }),
     // Add sagaMiddleware to our store
     applyMiddleware(sagaMiddleware, logger),
@@ -72,6 +83,6 @@ const storeInstance = createStore(
 // Pass rootSaga into our sagaMiddleware
 sagaMiddleware.run(rootSaga);
 
-ReactDOM.render(<Provider store={storeInstance}><App /></Provider>, 
+ReactDOM.render(<Provider store={storeInstance}><App /></Provider>,
     document.getElementById('root'));
 registerServiceWorker();

@@ -17,6 +17,12 @@ class MovieList extends Component {
         this.props.dispatch({ type: 'FETCH_MOVIES' }) // dispatch to sagas
     }
 
+    handClickPoster = (event) => {
+        console.log(event.target.value);
+        this.props.history.push('/details');
+        this.props.dispatch({ type: 'SET_CURRENT_MOVIE_ID', payload: event.target.value }) // dispatch to reduxState
+    }
+
     render() {
         return (
             <div className="movie-container">
@@ -27,17 +33,26 @@ class MovieList extends Component {
                             <div className="movie-title">
                                 {movieItem.title}
                             </div>
-                            <div className="movie-poster">
-                                <img src={movieItem.poster} alt={`Image of the movie ${movieItem.title}`} />
+                            <div className="movie-poster-container">
+                                <img
+                                    className="movie-poster-image"
+                                    src={movieItem.poster}
+                                    alt={`The movie ${movieItem.title}`}
+                                />
                             </div>
                             <div className="movie-description">
                                 {movieItem.description}
                             </div>
+                            <button
+                                onClick={this.handClickPoster}
+                                value={movieItem.id}
+                            >View Details
+                            </button>
                         </>);
                 })}
-                {/* <pre>
-                    {JSON.stringify(this.props.movies, null, 4)}
-                </pre> */}
+                <pre>
+                    {JSON.stringify(this.props.moviesId, null, 4)}
+                </pre>
 
             </div>
         );
@@ -47,6 +62,7 @@ class MovieList extends Component {
 // Map redux state to props so component can access the redux state
 const mapReduxStateToProps = (reduxState) => ({
     movies: reduxState.movies,
+    movieId: reduxState.movieId,
 })
 
 

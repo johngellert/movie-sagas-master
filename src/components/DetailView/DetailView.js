@@ -19,33 +19,16 @@ class DetailView extends Component {
                 {this.props.movies.length !== 0 ?
                     <>
                         <div className="movie-title">
-                            {this.props.movies[6].title}
+                            {this.props.movies[parseInt(this.props.movieId) - 1].title}
                         </div>
                         <div className="movie-description">
-                            {this.props.movies[6].description}
+                            {this.props.movies[parseInt(this.props.movieId) - 1].description}
                         </div>
                     </>
                     :
                     <></>
                 }
 
-
-
-                {/* this.props.reduxState.movies.title */}
-                {/* <>
-                    <div className="movie-title">
-                        {movieItem.title}
-                    </div>
-                    <div className="movie-poster">
-                        <img src={movieItem.poster} alt={`Image of the movie ${movieItem.title}`} />
-                    </div>
-                    <div className="movie-poster">
-                        {movieItem.description}
-                    </div>
-                </>
-                })} */}
-                {/* display title */}
-                {/* display description */}
                 {/* display genres associated with movie*/}
 
 
@@ -55,7 +38,8 @@ class DetailView extends Component {
 }
 
 const mapReduxStateToProps = (reduxState) => ({
-    movies: reduxState.movies
+    movies: reduxState.movies,
+    movieId: reduxState.movieId,
 });
 
 export default connect(mapReduxStateToProps)(DetailView);
