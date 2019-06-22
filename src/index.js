@@ -27,7 +27,7 @@ function* rootSaga() {
 function* fetchMovies() {
     try {
          // movieResponse is an object with an array of objects with properties of id, title, poster, description
-        const moviesResponse = yield axios.get('/API');
+        const moviesResponse = yield axios.get('/API/movies');
         // moviesResponse.data is only the array of objects with properties of id, title, poster, description
         yield put({type: 'SET_MOVIES', payload: moviesResponse.data });
     } catch(error) {

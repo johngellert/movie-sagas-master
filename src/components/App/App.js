@@ -19,15 +19,15 @@ class App extends Component {
         </div>
         <MovieList />
 
-        <pre>
+        {/* <pre>
           {JSON.stringify(this.props.reduxState, null, 4)}
-        </pre>
+        </pre> */}
       </Router>
     );
   }
 }
 
-
+// Map redux state to props so component can access the redux state
 const mapReduxStateToProps = (reduxState) => ({
   reduxState: reduxState,
 })

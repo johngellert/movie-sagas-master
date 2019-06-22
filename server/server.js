@@ -12,7 +12,7 @@ app.use(express.static('build'));
 
 /** ---------- ROUTES ---------- **/
 // base route to use movieRouter
-app.use('/API', movieRouter);
+app.use('/API/movies', movieRouter);
 
 /** ---------- START SERVER ---------- **/
 app.listen(port, function () {
