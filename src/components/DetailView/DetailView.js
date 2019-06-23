@@ -10,11 +10,16 @@ class DetailView extends Component {
         this.props.history.push('/');
     }
 
+    handleClickEdit = () => {
+        this.props.history.push('/edit');
+    }
+
     render() {
 
         return (
             <>
                 <button onClick={this.handleClickBackToMovies}>Back To Movies</button>
+                <button onClick={this.handleClickEdit}>Edit</button>
 
                 {this.props.movies.length !== 0 ?
                     <>
@@ -28,9 +33,24 @@ class DetailView extends Component {
                     :
                     <></>
                 }
+                <br />
+                <div className="movie-genres-title">Genre</div>
+                <div className="genre-container">
+                    {this.props.currentMovieGenre.length !== 0 ?
+                        <ul>
+                            {this.props.currentMovieGenre.map((genreItem) => {
+                                return <li>{genreItem.genreName}</li>
+                            })}
+                        </ul> 
+                        :
+                        <p>Click "Edit" to add a genre!</p>
+                    }
 
-                {/* display genres associated with movie*/}
-
+                </div>
+                {/* <Route path="/edit" exact component={EditView} /> */}
+                <pre>
+                    {JSON.stringify(this.props.reduxState.currentMovieGenre, null, 4)}
+                </pre>
 
             </>
         );
@@ -40,6 +60,8 @@ class DetailView extends Component {
 const mapReduxStateToProps = (reduxState) => ({
     movies: reduxState.movies,
     movieId: reduxState.movieId,
+    currentMovieGenre: reduxState.currentMovieGenre,
+    reduxState: reduxState,
 });
 
 export default connect(mapReduxStateToProps)(DetailView);

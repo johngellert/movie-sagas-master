@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 // Import components
 import MovieList from '../MovieList/MovieList';
 import DetailView from '../DetailView/DetailView';
+import EditView from '../EditView/EditView.js';
 
 class App extends Component {
   // Renders the entire app on the DOM
@@ -16,16 +17,14 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <p>Empty Page</p>
-        </div>
+          <Route path="/" exact component={MovieList} />
+          <Route path="/details" exact component={DetailView} />
+          <Route path="/edit" exact component={EditView} />
 
-
-        <Route path="/" exact component={MovieList} />
-        <Route path="/details" exact component={DetailView} />
-
-        {/* <pre>
+          {/* <pre>
           {JSON.stringify(this.props.reduxState, null, 4)}
         </pre> */}
+        </div>
       </Router>
     );
   }

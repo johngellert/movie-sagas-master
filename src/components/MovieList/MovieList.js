@@ -19,8 +19,12 @@ class MovieList extends Component {
 
     handClickPoster = (event) => {
         console.log(event.target.value);
+        // Route to the DetailView component
         this.props.history.push('/details');
-        this.props.dispatch({ type: 'SET_CURRENT_MOVIE_ID', payload: event.target.value }) // dispatch to reduxState
+        // dispatch to reduxState the id of the current movie
+        this.props.dispatch({ type: 'SET_CURRENT_MOVIE_ID', payload: event.target.value });
+        // dispatch to sagas with the id of the current movie
+        this.props.dispatch({ type: 'FETCH_CURRENT_MOVIE_GENRES', payload: event.target.value });
     }
 
     render() {
@@ -50,9 +54,9 @@ class MovieList extends Component {
                             </button>
                         </>);
                 })}
-                <pre>
-                    {JSON.stringify(this.props.moviesId, null, 4)}
-                </pre>
+                {/* <pre>
+                    {JSON.stringify(this.props.reduxState.currentMovieGenre, null, 4)}
+                </pre> */}
 
             </div>
         );
@@ -63,6 +67,7 @@ class MovieList extends Component {
 const mapReduxStateToProps = (reduxState) => ({
     movies: reduxState.movies,
     movieId: reduxState.movieId,
+    reduxState: reduxState,
 })
 
 
