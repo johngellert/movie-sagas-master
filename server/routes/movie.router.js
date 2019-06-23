@@ -21,6 +21,21 @@ router.get('/', (req, res) => {
         // Send status code 500 (Internal Server Error) to the promise created in the fetchMovies saga.
         res.sendStatus(500);
     });
-})
+});
+//[req.body.data.currentMovieId]
+router.post('/current/genres', (req, res) => {
+    const currentMovieGenreQuery =  `SELECT "movies_genres"."movie_id" as "movieId", "movies"."title", "genres"."name" as "genreName" FROM "movies"
+    LEFT OUTER JOIN "movies_genres" ON "movies_genres"."movie_id"="movies"."id"
+    LEFT OUTER JOIN "genres" ON "genres"."id"="movies_genres"."genre_id"
+    WHERE "movies_genres"."movie_id" = $1;`;
+    pool.query(currentMovieGenreQuery, [req.body.payload]).then((result) => {
+        console.log(result.rows); 
+        res.send(result.rows);
+    }).catch(error => {
+        console.log('Error completing SELECT current movie genres', error);
+        // Send status code 500 (Internal Server Error) to the promise created in the fetchCurrentMoviesGenres saga.
+        res.sendStatus(500);
+    });
+});
 
 module.exports = router;

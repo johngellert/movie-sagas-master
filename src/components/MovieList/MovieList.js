@@ -17,27 +17,47 @@ class MovieList extends Component {
         this.props.dispatch({ type: 'FETCH_MOVIES' }) // dispatch to sagas
     }
 
+    handClickPoster = (event) => {
+        console.log(event.target.value);
+        // Route to the DetailView component
+        this.props.history.push('/details');
+        // dispatch to reduxState the id of the current movie
+        this.props.dispatch({ type: 'SET_CURRENT_MOVIE_ID', payload: event.target.value });
+        // dispatch to sagas with the id of the current movie
+        this.props.dispatch({ type: 'FETCH_CURRENT_MOVIE_GENRES', payload: event.target.value });
+    }
+
     render() {
         return (
             <div className="movie-container">
-
+                {/* map through image reduxState and display title, poster, and description */}
                 {this.props.movies.map(movieItem => {
                     return (
                         <>
                             <div className="movie-title">
                                 {movieItem.title}
                             </div>
-                            <div className="movie-poster">
-                                <img src={movieItem.poster} alt={`Image of the movie ${movieItem.title}`} />
+                            <div className="movie-poster-container">
+                                <img
+                                    className="movie-poster-image"
+                                    src={movieItem.poster}
+                                    alt={`The movie ${movieItem.title}`}
+                                />
                             </div>
-                            <div className="movie-poster">
+                            <div className="movie-description">
                                 {movieItem.description}
                             </div>
+                            <button
+                                onClick={this.handClickPoster}
+                                value={movieItem.id}
+                            >View Details
+                            </button>
                         </>);
                 })}
-                <pre>
-                    {JSON.stringify(this.props.movies, null, 4)}
-                </pre>
+                {/* <pre>
+                    {JSON.stringify(this.props.reduxState.currentMovieGenre, null, 4)}
+                </pre> */}
+
             </div>
         );
     }
@@ -46,6 +66,8 @@ class MovieList extends Component {
 // Map redux state to props so component can access the redux state
 const mapReduxStateToProps = (reduxState) => ({
     movies: reduxState.movies,
+    movieId: reduxState.movieId,
+    reduxState: reduxState,
 })
 
 
