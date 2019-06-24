@@ -1,5 +1,8 @@
 # React-Redux with Sagas
 
+## Project Description
+This application displays a list of movies. The user can click on the view details button to see additional movie details, to include generes. In the details view, the user can move back to the movie list or click edit to edit the current movie title or description. In the edit view, the user can select cancel to route back to the details view or enter values into the title and description input fields and select save to update the database and route back to the details page.
+
 > **PLEASE COMMENT YOUR CODE.** Do not clone this repository. Instead, download the zip, extract the contents, `git init`, `git add .`, `git commit -m "initial commit - base project"` and add your remote. Please do this before you leave for the day.
 
 For this weekend challenge you'll be building a movie application!  
@@ -73,7 +76,7 @@ As one of your last projects, it's possible you will be sharing this with employ
 - [ ] Invest some time in styling it up!
     - [ ] Research grids for you movie posters on the Movie List page
     - [ ] Add route change animations
-- [ ] Commit your code frequently! You should have 15+ commits on a project of this size. Use branches to help break down your features.
+- [`x`] Commit your code frequently! You should have 15+ commits on a project of this size. Use branches to help break down your features.
 - [ ] Comment your code.
 - [ ] Update this README to include a description of the project in your own words.
 
