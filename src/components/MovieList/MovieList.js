@@ -4,6 +4,9 @@ import React, { Component } from 'react';
 // import connect so that component can access the redux state
 import { connect } from 'react-redux';
 
+import Grid from '@material-ui/core/Grid';
+
+
 class MovieList extends Component {
 
     // use component did mount to trigger dispatch on page load
@@ -31,26 +34,24 @@ class MovieList extends Component {
                 {/* map through image reduxState and display title, poster, and description */}
                 {this.props.movies.map(movieItem => {
                     return (
-                        <div key={movieItem.id} className="movie-container">
-                            <div className="movie-title">
-                                {movieItem.title}
-                            </div>
-                            <div className="movie-poster-container">
+                        <Grid key={movieItem.id} container justify="center" spacing={16}>
+                            <Grid item xs={6}>
                                 <img
-                                    className="movie-poster-image"
                                     src={movieItem.poster}
                                     alt={`The movie ${movieItem.title}`}
                                 />
-                            </div>
-                            <div className="movie-description">
+                            </Grid>
+                            <Grid item xs={6}>
+                                <h2>{movieItem.title}</h2>
                                 {movieItem.description}
-                            </div>
-                            <button
-                                onClick={this.handClickPoster}
-                                value={movieItem.id}
-                            >View Details
-                            </button>
-                        </div>
+                                <br />
+                                <button
+                                    onClick={this.handClickPoster}
+                                    value={movieItem.id}
+                                >View Details
+                                </button>
+                            </Grid>
+                        </Grid>
                     );
                 })}
             </>
