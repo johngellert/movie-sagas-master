@@ -4,6 +4,8 @@ import React, { Component } from 'react';
 // import connect so that component can access the redux state
 import { connect } from 'react-redux';
 
+import ThisMovieGenres from '../ThisMovieGenres/ThisMovieGenres.js';
+
 class EditView extends Component {
 
     state = {
@@ -12,13 +14,14 @@ class EditView extends Component {
     }
 
     handleClickCancel = () => {
-        // this.props.history.push('/details');
+        this.props.history.push('/details');
+        this.resetLocalState();
     }
 
-    handleClickSubmit = () => {
-        // this.props.history.push('/details');
-        console.log(this.state.newTitle);
-        console.log(this.state.newDescription);
+    handleClickSave = () => {
+        this.props.history.push('/details');
+        this.props.dispatch({type: 'UPDATE_MOVIE', payload: {...this.state, id: this.props.movieId}});
+
         this.resetLocalState();
     }
 
@@ -48,21 +51,33 @@ class EditView extends Component {
         return (
             <div>
                 <button onClick={this.handleClickCancel}>Cancel</button>
-                <button onClick={this.handleClickSubmit}>Save</button>
+                <button onClick={this.handleClickSave}>Save</button>
                 <label>Title</label>
                 <input value={this.state.newTitle} onChange={this.handleChangeTitle}></input>
 
                 <label>Description</label>
                 <input value={this.state.newDescription} onChange={this.handleChangeDescription}></input>
-                <pre>
-                    {JSON.stringify(this.props.reduxState, null, 4)}
-                </pre>
+                {this.props.movies.length !== 0 ?
+                    <>
+                        <div className="movie-title">
+                            {this.props.movies[parseInt(this.props.movieId) - 1].title}
+                        </div>
+                        <div className="movie-description">
+                            {this.props.movies[parseInt(this.props.movieId) - 1].description}
+                        </div>
+                    </>
+                    :
+                    <></>
+                }
+                <ThisMovieGenres />
             </div>
         );
     }
 }
 
 const mapReduxStateToProps = (reduxState) => ({
+    movies: reduxState.movies,
+    movieId: reduxState.movieId,
     reduxState: reduxState,
 });
 

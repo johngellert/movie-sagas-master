@@ -20,6 +20,7 @@ import axios from 'axios';
 function* rootSaga() {
     yield takeEvery('FETCH_MOVIES', fetchMovies);
     yield takeEvery('FETCH_CURRENT_MOVIE_GENRES', fetchCurrentMoviesGenres);
+    yield takeEvery('UPDATE_MOVIE', updateCurrentMovie);
 }
 
 // Declare fetchMovies generator function
@@ -45,6 +46,16 @@ function* fetchCurrentMoviesGenres(action) {
         const currentMovieGenresResponse = yield axios.post('/API/movies/current/genres', action);
         // movieGenresResponse.data is an array of objects with properties of movieId, title, genreName
         yield put({ type: 'SET_CURRENT_MOVIE_GENRES', payload: currentMovieGenresResponse.data });
+    } catch (error) {
+        console.log('error fetching current movie genres', error);
+    }
+}
+
+function* updateCurrentMovie(action) {
+    try {
+        console.log('update current movie saga');
+        yield axios.put(`/API/movies`, action.payload);
+        yield put({ type: 'FETCH_MOVIES' });
     } catch (error) {
         console.log('error fetching current movie genres', error);
     }
