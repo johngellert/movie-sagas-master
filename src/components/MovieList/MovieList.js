@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 // import connect so that component can access the redux state
 import { connect } from 'react-redux';
 
-
 class MovieList extends Component {
 
     // use component did mount to trigger dispatch on page load
@@ -18,7 +17,6 @@ class MovieList extends Component {
     }
 
     handClickPoster = (event) => {
-        console.log(event.target.value);
         // Route to the DetailView component
         this.props.history.push('/details');
         // dispatch to reduxState the id of the current movie
@@ -29,11 +27,11 @@ class MovieList extends Component {
 
     render() {
         return (
-            <div className="movie-container">
+            <>
                 {/* map through image reduxState and display title, poster, and description */}
                 {this.props.movies.map(movieItem => {
                     return (
-                        <>
+                        <div key={movieItem.id} className="movie-container">
                             <div className="movie-title">
                                 {movieItem.title}
                             </div>
@@ -52,13 +50,10 @@ class MovieList extends Component {
                                 value={movieItem.id}
                             >View Details
                             </button>
-                        </>);
+                        </div>
+                    );
                 })}
-                {/* <pre>
-                    {JSON.stringify(this.props.reduxState.currentMovieGenre, null, 4)}
-                </pre> */}
-
-            </div>
+            </>
         );
     }
 }
@@ -67,7 +62,6 @@ class MovieList extends Component {
 const mapReduxStateToProps = (reduxState) => ({
     movies: reduxState.movies,
     movieId: reduxState.movieId,
-    reduxState: reduxState,
 })
 
 

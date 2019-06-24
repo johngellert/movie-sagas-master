@@ -6,7 +6,7 @@ const pool = require('../modules/pool');
 
 router.get('/', (req, res) => {
     // Declare movieSelectQuery constant set to SQL query.
-    const movieSelectQuery = 'SELECT * FROM "movies";';
+    const movieSelectQuery = 'SELECT * FROM "movies" ORDER BY "id";';
 
     // Query the database by passing the movieSelectQuery into the query function.
     // Result is an object sent back from the database with a property of rows, which 
@@ -24,16 +24,31 @@ router.get('/', (req, res) => {
 });
 //[req.body.data.currentMovieId]
 router.post('/current/genres', (req, res) => {
-    const currentMovieGenreQuery =  `SELECT "movies_genres"."movie_id" as "movieId", "movies"."title", "genres"."name" as "genreName" FROM "movies"
+    const currentMovieGenreQuery =  `
+    SELECT  
+    "genres"."name" as "genreName", 
+    "genres"."id" as "genreID" 
+    FROM "movies"
     LEFT OUTER JOIN "movies_genres" ON "movies_genres"."movie_id"="movies"."id"
     LEFT OUTER JOIN "genres" ON "genres"."id"="movies_genres"."genre_id"
-    WHERE "movies_genres"."movie_id" = $1;`;
+    WHERE "movies_genres"."movie_id" = $1`;
     pool.query(currentMovieGenreQuery, [req.body.payload]).then((result) => {
-        console.log(result.rows); 
         res.send(result.rows);
     }).catch(error => {
         console.log('Error completing SELECT current movie genres', error);
         // Send status code 500 (Internal Server Error) to the promise created in the fetchCurrentMoviesGenres saga.
+        res.sendStatus(500);
+    });
+});
+
+router.put('/', (req, res) => {
+    const updateMovieQuery = `UPDATE "movies" SET "title"= $1, "description" = $2
+    WHERE "id"=$3;`;
+    pool.query(updateMovieQuery, [req.body.newTitle, req.body.newDescription, req.body.id]).then((result) => {
+        res.sendStatus(200);
+    }).catch(error => {
+        console.log('Error completing UPDATE current movie', error);
+        // Send status code 500 (Internal Server Error) to the promise created in the updateCurrentMoviesGenres saga.
         res.sendStatus(500);
     });
 });

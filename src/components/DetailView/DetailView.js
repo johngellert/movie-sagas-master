@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 // import connect so that component can access the redux state
 import { connect } from 'react-redux';
+import ThisMovieGenres from '../ThisMovieGenres/ThisMovieGenres';
 
 class DetailView extends Component {
 
@@ -34,24 +35,7 @@ class DetailView extends Component {
                     <></>
                 }
                 <br />
-                <div className="movie-genres-title">Genre</div>
-                <div className="genre-container">
-                    {this.props.currentMovieGenre.length !== 0 ?
-                        <ul>
-                            {this.props.currentMovieGenre.map((genreItem) => {
-                                return <li>{genreItem.genreName}</li>
-                            })}
-                        </ul> 
-                        :
-                        <p>Click "Edit" to add a genre!</p>
-                    }
-
-                </div>
-                {/* <Route path="/edit" exact component={EditView} /> */}
-                <pre>
-                    {JSON.stringify(this.props.reduxState.currentMovieGenre, null, 4)}
-                </pre>
-
+                <ThisMovieGenres />
             </>
         );
     }
@@ -60,8 +44,6 @@ class DetailView extends Component {
 const mapReduxStateToProps = (reduxState) => ({
     movies: reduxState.movies,
     movieId: reduxState.movieId,
-    currentMovieGenre: reduxState.currentMovieGenre,
-    reduxState: reduxState,
 });
 
 export default connect(mapReduxStateToProps)(DetailView);
